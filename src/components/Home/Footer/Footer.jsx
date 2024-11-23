@@ -25,7 +25,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-              {/* Quick Links */}
+                {/* Quick Links */}
                 <div>
                     <h3 className="text-white text-lg font-semibold mb-4">Quick Links</h3>
                     <ul className="space-y-2">
@@ -53,12 +53,12 @@ const Footer = () => {
                 <div>
                     <h3 className="text-white text-lg font-semibold mb-4">Working Hours</h3>
                     <ul className="space-y-2">
-                        <li>Monday - Friday: 8:00 AM - 8:00 PM</li>
-                        <li>Saturday: 9:00 AM - 5:00 PM</li>
-                        <li>Sunday: Closed</li>
+                        <li className="text-green-500">Monday - Friday: 8:00 AM - 8:00 PM</li>
+                        <li className="text-green-500">Saturday: 9:00 AM - 5:00 PM</li>
+                        <li className="text-red-500">Sunday: Closed</li>
                     </ul>
                     <p className="text-sm mt-4">
-                        <span className="font-bold">Emergency:</span> 24/7 Available
+                        <span className="font-bold text-blue-500">Emergency:</span> 24/7 Available
                     </p>
                 </div>
             </div>
