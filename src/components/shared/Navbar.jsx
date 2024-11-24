@@ -182,7 +182,7 @@ const Navbar = () => {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src={logo} className="w-14" alt="Flowbite Logo" />
+          <img src={logo} className="w-16" alt="Flowbite Logo" />
         </Link>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}

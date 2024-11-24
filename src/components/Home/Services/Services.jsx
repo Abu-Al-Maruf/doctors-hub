@@ -12,7 +12,7 @@ const Services = () => {
     }, []);
 
     return (
-        <div className="px-4 sm:px-6 md:px-12 lg:px-20 services-container py-16 bg-gradient-to-r from-indigo-50 via-white to-indigo-50">
+        <div className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-white">
             {/* Title and Border */}
             <div className="text-center mb-8">
                 <h1 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4">

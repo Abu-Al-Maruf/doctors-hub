@@ -1,13 +1,16 @@
 import React from 'react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import logo from '../../../assets/logo.png';
+import { Link } from 'react-router';
 const Footer = () => {
     return (
         <footer className="px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-800 text-gray-300 py-10">
             <div className=" grid grid-cols-2 sm:grid-cols-4 gap-8 items-center justify-center">
                 {/* Logo and Text */}
                 <div className="flex flex-col items-center gap-3    ">
-                    <img className="w-20" src={logo} alt="" />
+                    <Link to="/">
+                        <img className="w-20" src={logo} alt="logo" />
+                    </Link>
 
                     <div className="flex gap-4 mt-4">
                         <a href="#" className="hover:text-blue-400 hover:shadow-3d active:shadow-3d">
