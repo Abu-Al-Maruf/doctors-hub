@@ -2,11 +2,12 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
-import router from "./routes/routes";
 import 'flowbite';
+import router from "./routes/Routes";
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} future={{ v7_startTransition: true }} />
+    <RouterProvider router={router}  />
   </StrictMode>
 );

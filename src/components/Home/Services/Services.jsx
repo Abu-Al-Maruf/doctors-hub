@@ -29,7 +29,7 @@ const Services = () => {
                         className="group flex flex-col items-center justify-start p-4 bg-blue-100 hover:bg-black/70 shadow-lg hover:shadow-2xl rounded-lg transform transition-all duration-300 ease-in-out cursor-pointer hover:translate-y-1 "
                     >
                         {/* Image Section */}
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24">
                             <img
                                 className="w-full h-full rounded-full object-cover"
                                 src={service.image}
