@@ -1,44 +1,109 @@
-import { FaGithub, FaEye, FaEyeSlash } from 'react-icons/fa';
-import loginImage from '../../../src/assets/login.png'
-import { FcGoogle } from 'react-icons/fc';
-import { useState } from 'react';
-import { Link } from 'react-router';
+import { FaGithub, FaEye, FaEyeSlash, FaFacebookF } from "react-icons/fa";
+import loginImage from "../../../src/assets/login.png";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { createUser, googleLogin, facebookLogin } = useAuth();
+  const navigate = useNavigate();
 
+  const onSubmit = async (data) => {
+    const loadingToast = toast.loading('Creating your account...');
+
+    try {
+      await createUser(data.email, data.password);
+
+      toast.success('Account created successfully!', {
+        id: loadingToast,
+      });
+
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+
+      if (error.code === 'auth/email-already-in-use') {
+        toast.error('This email is already registered.', {
+          id: loadingToast,
+        });
+      } else {
+        toast.error('Failed to create account. Please try again.', {
+          id: loadingToast,
+        });
+      }
+    }
+  };
+
+  // login with google 
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await googleLogin();
+      console.log(result.user);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // login with facebook
+  const handleFacebookLogin = async () => {
+    try {
+      const result = await facebookLogin();
+      console.log(result.user);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // password visibility toggle
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   return (
-    <section className='px-4 sm:px-6 md:px-16 py-20 bg-[#ECF0FF]'>
-      <div className='flex flex-col sm:flex-row justify-between items-center gap-10'>
-        <div className='w-full sm:w-1/2'>
-          <img className='w-full' src={loginImage} alt="" />
+    <section className="px-4 sm:px-6 md:px-16 py-20 bg-[#ECF0FF]">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-10">
+        <div className="w-full sm:w-1/2">
+          <img className="w-full" src={loginImage} alt="Login" />
         </div>
 
         <div className="w-full sm:w-1/2 bg-white border border-gray-300 rounded-lg p-8 max-w-[500px] mx-auto">
           <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-6 drop-shadow-md">
             Register
           </h2>
-          <form className="space-y-6">
+
+          {/* Register Form */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Full Name Field */}
             <div>
               <label
-                htmlFor="fullName"
+                htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
                 Full Name
               </label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
+                id="name"
+                {...register("name", { required: "Name is required" })}
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Enter your full name"
-                required
               />
+              {errors.name && (
+                <p className="text-red-500  text-sm mt-1">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
+
+            {/* Email Field */}
             <div>
               <label
                 htmlFor="email"
@@ -49,28 +114,52 @@ const Register = () => {
               <input
                 type="email"
                 id="email"
-                name="email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                    message: "Enter a valid email address",
+                  },
+                })}
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Enter your email"
-                required
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
+
+            {/* Mobile Number Field */}
             <div>
               <label
                 htmlFor="number"
                 className="block text-sm font-medium text-gray-700"
               >
-                Number
+                Mobile Number
               </label>
               <input
                 type="tel"
                 id="number"
-                name="number"
+                {...register("number", {
+                  required: "Mobile number is required",
+                  minLength: {
+                    value: 10,
+                    message: "Number must be at least 10 digits",
+                  },
+                })}
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Enter your phone number"
-                required
               />
+              {errors.number && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.number.message}
+                </p>
+              )}
             </div>
+
+            {/* Password Field */}
             <div>
               <label
                 htmlFor="password"
@@ -82,10 +171,19 @@ const Register = () => {
                 <input
                   type={passwordVisible ? "text" : "password"}
                   id="password"
-                  name="password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                    pattern: {
+                      value: /[!@#$%^&*(),.?":{}|<>]/,
+                      message: "Password must have one special character",
+                    },
+                  })}
                   className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="Enter your password"
-                  required
                 />
                 <button
                   type="button"
@@ -95,22 +193,40 @@ const Register = () => {
                   {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
+
+            {/* Terms and Conditions */}
             <div className="flex items-center">
               <input
                 id="terms"
-                name="terms"
                 type="checkbox"
-                className="h-4 w-4 cursor-pointer  text-blue-600 border-gray-300 rounded"
-                required
+                className="h-4 w-4 cursor-pointer text-blue-600 border-gray-300 rounded"
+                {...register("terms", {
+                  required: "You must agree to the terms and conditions",
+                })}
               />
-              <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
+              <label
+                htmlFor="terms"
+                className="ml-2 block text-sm text-gray-700"
+              >
                 I agree to the{" "}
                 <a href="#" className="text-blue-600 underline">
                   Terms and Conditions
                 </a>
               </label>
             </div>
+            {errors.terms && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.terms.message}
+              </p>
+            )}
+
+            {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-2 px-4 rounded-lg shadow-lg transform transition hover:scale-[.98]"
@@ -118,21 +234,25 @@ const Register = () => {
               Register
             </button>
           </form>
-          <hr className="my-6 border-gray-300" />
+
+          <div className="flex items-center justify-center gap-2">
+            <hr className="my-6 w-full border-gray-300" />
+            <span className="text-gray-500">or</span>
+            <hr className="my-6 w-full border-gray-300" />
+          </div>
+
+          {/* Social Login Buttons */}
           <div className="flex flex-col space-y-3">
-            <button
-              className="flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-lg shadow-md bg-white text-gray-700 hover:bg-gray-100 transform transition hover:scale-[.98]"
-            >
+            <button onClick={handleGoogleLogin} className="flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-lg shadow-md bg-white text-gray-700 hover:bg-gray-100 transform transition hover:scale-[.98]">
               <FcGoogle className="h-5 w-5 mr-2 text-red-500" />
-              Register with Google
+              Continue with Google
             </button>
-            <button
-              className="flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-lg shadow-md bg-white text-gray-700 hover:bg-gray-100 transform transition hover:scale-[.98]"
-            >
-              <FaGithub className="h-5 w-5 mr-2 text-gray-900" />
-              Register with GitHub
+            <button onClick={handleFacebookLogin} className="flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-lg shadow-md bg-white text-gray-700 hover:bg-gray-100 transform transition hover:scale-[.98]">
+              <FaFacebook className="h-5 w-5 mr-2 text-blue-600" />
+              Continue with Facebook
             </button>
           </div>
+
           <p className="text-center text-sm text-gray-600 mt-4">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-600 underline">
@@ -140,9 +260,7 @@ const Register = () => {
             </Link>
           </p>
         </div>
-
       </div>
-
     </section>
   );
 };

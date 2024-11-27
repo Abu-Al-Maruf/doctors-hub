@@ -3,7 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import ReactStars from "react-stars";
+import { Rating, Star } from '@smastrom/react-rating'
+
+import '@smastrom/react-rating/style.css'
 
 const Review = () => {
     const [reviews, setReviews] = useState([]);
@@ -15,6 +17,7 @@ const Review = () => {
             .then((data) => setReviews(data))
             .catch((error) => console.error("Error loading reviews:", error));
     }, []);
+ 
 
     return (
         <section className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-gray-100">
@@ -59,13 +62,12 @@ const Review = () => {
                                 "{review.testimonial}"
                             </p>
                             <div className="flex justify-center items-center mt-4">
-                                <ReactStars
-                                    count={5}
-                                    value={review.rating}
-                                    edit={false}
-                                    size={24}
-                                    color2={'#ffd700'}
-                                />
+                                {/* stars */}
+                                <Rating style={{ maxWidth: 170 }} value={review.rating} itemStyles={{
+                                    itemShapes: Star,
+                                    activeFillColor: '#ffb700',
+                                    inactiveFillColor: '#fbf1a9'
+                                }} readOnly />
 
                             </div>
                         </div>
