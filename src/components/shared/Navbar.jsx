@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { FaBars, FaCaretDown, FaCaretUp, FaTimes } from 'react-icons/fa';
 import { useEffect, useRef, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,7 +12,14 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const lastScrollY = useRef(0);
   const { user, logOut } = useAuth();
+  const navigate = useNavigate()
+  const location = useLocation();
 
+  const handleLogout = async () => {
+    await logOut();
+    navigate('/');
+    toast.success('Logged out successfully!');
+  };
   // handle when scroll down navbar will hidden and when scroll up navbar will show
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +53,11 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuRef]);
+
+  useEffect(() => {
+    // Reset navbar visibility when component mounts or route changes
+    setIsVisible(true);
+  }, [location]);
 
   const navLinks = <>
     <li>
@@ -171,7 +184,7 @@ const Navbar = () => {
       {
         user ?
           <Link
-            onClick={logOut}
+            onClick={handleLogout}
             to="/"
             className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
           >

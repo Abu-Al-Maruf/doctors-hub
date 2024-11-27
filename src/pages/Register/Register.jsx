@@ -42,23 +42,37 @@ const Register = () => {
 
   // login with google 
   const handleGoogleLogin = async () => {
+    const loadingToast = toast.loading('Logging in with Google...');
     try {
       const result = await googleLogin();
       console.log(result.user);
       navigate("/");
+      toast.success('Logged in with Google successfully!', {
+        id: loadingToast
+      });
     } catch (error) {
       console.log(error);
+      toast.error('Failed to log in with Google. Please try again.', {
+        id: loadingToast
+      });
     }
   }
 
   // login with facebook
   const handleFacebookLogin = async () => {
+    const loadingToast = toast.loading('Logging in with Facebook...');
     try {
       const result = await facebookLogin();
       console.log(result.user);
       navigate("/");
+      toast.success('Logged in with Facebook successfully!', {
+        id: loadingToast
+      });
     } catch (error) {
       console.log(error);
+      toast.error('Failed to log in with Facebook. Please try again.', {
+        id: loadingToast
+      });
     }
   }
 

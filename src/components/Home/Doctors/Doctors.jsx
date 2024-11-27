@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaUserMd } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Doctors = () => {
     const [doctors, setDoctors] = useState([]);
@@ -45,10 +46,10 @@ const Doctors = () => {
                                 {doctor.designation}
                             </p>
                             {/* View Profile Button */}
-                            <button className="mt-4 flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 hover:translate-y-1 active:bg-blue-800 transition-all">
+                            <Link to={`/doctor-profile/${doctor.doctorId}`} className="mt-4 flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 hover:translate-y-1 active:bg-blue-800 transition-all">
                                 <FaUserMd className="mr-2" />
                                 View Profile
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
