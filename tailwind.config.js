@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
+        leagueSpartan: ["League Spartan", "sans-serif"],
       },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("daisyui"), require("flowbite/plugin")],
 };

@@ -38,7 +38,7 @@ const Services = () => {
                         </div>
 
                         {/* Text Section */}
-                        <h3 className="text-lg sm:text-xl font-medium text-center mt-3 text-gray-700 group-hover:text-white">{service.title}</h3>
+                        <h3 className="text-lg sm:text-sm font-medium text-center mt-3 text-gray-700 group-hover:text-white">{service.title}</h3>
                     </div>
                 ))}
             </div>

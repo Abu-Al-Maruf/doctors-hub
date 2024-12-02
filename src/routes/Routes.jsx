@@ -5,6 +5,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import DoctorProfile from "../pages/DoctorProfile/DoctorProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Apponment from "../pages/Appoinment/Apponment";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "appoinment",
+        element: <Apponment />,
       },
       {
         path: "doctor-profile/:doctorId",

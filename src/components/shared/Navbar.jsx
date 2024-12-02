@@ -55,7 +55,6 @@ const Navbar = () => {
   }, [menuRef]);
 
   useEffect(() => {
-    // Reset navbar visibility when component mounts or route changes
     setIsVisible(true);
   }, [location]);
 
@@ -84,7 +83,7 @@ const Navbar = () => {
       {/* Dropdown menu  */}
       <div
         id="dropdownDoctorsHub"
-        className={`z-10 ${isDropdownOpen ? 'block' : 'hidden'} font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
+        className={`z-50 ${isDropdownOpen ? 'block' : 'hidden'} font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
       >
         <ul
           className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -111,7 +110,7 @@ const Navbar = () => {
             </button>
             <div
               id="doubleDropdown"
-              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+              className="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
             >
               <ul
                 className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -200,7 +199,7 @@ const Navbar = () => {
 
   </>
   return (
-    <nav className={`px-4 sm:px-6 md:px-12 lg:px-20 sticky top-0 left-0 right-0 z-50 bg-[#EBEAFF] shadow-lg transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-[105%]'}`}>
+    <nav className={`px-4 sm:px-6 md:px-12 lg:px-20 sticky top-0 left-0 right-0 z-10 bg-[#EBEAFF] shadow-lg transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-[105%]'}`}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-3 px-4" ref={menuRef}>
         <Link
           to="/"

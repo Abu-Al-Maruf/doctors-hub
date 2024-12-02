@@ -7,7 +7,7 @@ import Review from "../../components/Home/Review/Review";
 
 const Home = () => {
     return (
-        <div className="font-roboto">
+        <div className="font-leagueSpartan">
 
             <Banner></Banner>
             <Services></Services>
