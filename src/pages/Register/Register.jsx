@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -83,6 +84,9 @@ const Register = () => {
 
   return (
     <section className="px-4 sm:px-6 md:px-16 py-20 bg-[#ECF0FF]">
+       <Helmet>
+        <title>Register</title>
+      </Helmet>
       <div className="flex flex-col sm:flex-row justify-between items-center gap-10">
         <div className="w-full sm:w-1/2">
           <img className="w-full" src={loginImage} alt="Login" />

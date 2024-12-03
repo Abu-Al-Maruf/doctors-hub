@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
 
 const DoctorProfile = () => {
@@ -18,6 +19,9 @@ const DoctorProfile = () => {
 
     return (
         <section className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-indigo-50">
+            <Helmet>
+                <title>Doctor's Profile</title>
+            </Helmet>
             <div className="text-center mb-10">
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
                     Doctor's Profile

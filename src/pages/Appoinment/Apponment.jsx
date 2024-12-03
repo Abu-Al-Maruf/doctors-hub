@@ -3,6 +3,7 @@ import bgImg from "../../assets/appoinment-bg.png";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { Calendar } from "react-date-range";
+import { Helmet } from "react-helmet-async";
 
 const Appointment = () => {
   const [services, setServices] = useState([]);
@@ -12,6 +13,7 @@ const Appointment = () => {
   const [error, setError] = useState("");
 
 
+  
   // load services data from json file
   useEffect(() => {
     fetch("services.json")
@@ -47,6 +49,10 @@ const Appointment = () => {
 
   return (
     <div className="relative ">
+      <Helmet>
+        <title>Book Your Appointment</title>
+      </Helmet>
+
 
       {/* Hero-style Appointment Banner with Background Color */}
       <div

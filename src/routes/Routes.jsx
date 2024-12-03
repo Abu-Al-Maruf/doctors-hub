@@ -6,6 +6,7 @@ import Register from "../pages/Register/Register";
 import DoctorProfile from "../pages/DoctorProfile/DoctorProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Apponment from "../pages/Appoinment/Apponment";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "appoinment",
         element: <Apponment />,
+      },
+      {
+        path: "about-us",
+        element: <AboutUs />,
       },
       {
         path: "doctor-profile/:doctorId",
