@@ -6,18 +6,23 @@ import { Navigation } from "swiper/modules";
 import { Rating, Star } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
+import { use } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const Review = () => {
-    const [reviews, setReviews] = useState([]);
+    const axiosPublic = useAxiosPublic();
 
-    // Fetch reviews from the JSON file
-    useEffect(() => {
-        fetch("/reviews.json")
-            .then((response) => response.json())
-            .then((data) => setReviews(data))
-            .catch((error) => console.error("Error loading reviews:", error));
-    }, []);
- 
+
+    // Fetch reviews from DB
+    const { data: reviews = [] } = useQuery({
+        queryKey: ['reviews'],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get('/reviews');
+            return data;
+        }
+    });
+    console.log(reviews);
 
     return (
         <section className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-gray-100">
@@ -47,7 +52,7 @@ const Review = () => {
                 className="mySwiper"
             >
                 {reviews.map((review) => (
-                    <SwiperSlide key={review.id}>
+                    <SwiperSlide key={review._id}>
                         <div className="bg-white shadow-lg rounded-lg p-6">
                             <img
                                 src={review.photo}

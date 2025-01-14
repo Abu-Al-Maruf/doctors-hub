@@ -1,18 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { FaUserMd } from "react-icons/fa";
 import { Link } from "react-router";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const Doctors = () => {
-    const [doctors, setDoctors] = useState([]);
     const [showAll, setShowAll] = useState(false);
+    const axiosPublic = useAxiosPublic();
 
-    // Fetch doctors data
-    useEffect(() => {
-        fetch("/doctors.json")
-            .then((response) => response.json())
-            .then((data) => setDoctors(data))
-            .catch((error) => console.error("Error fetching doctor data:", error));
-    }, []);
+    const { data: doctors = [] } = useQuery({
+        queryKey: ["doctors"],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get("/doctors");
+            return data;
+        },
+    });
+                
+    console.log(doctors);
+
 
     return (
         <section className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-indigo-50">
@@ -26,7 +32,7 @@ const Doctors = () => {
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {doctors.slice(0, showAll ? doctors.length : 8).map((doctor) => (
                     <div
-                        key={doctor.doctorId}
+                        key={doctor._id}
                         className="bg-white shadow-sm border border-black/20 rounded-lg p-6 hover:shadow-md transition-shadow hover:bg-gray-100 duration-1000 "
                     >
                         <div className="flex flex-col items-center">
@@ -46,7 +52,7 @@ const Doctors = () => {
                                 {doctor.designation}
                             </p>
                             {/* View Profile Button */}
-                            <Link to={`/doctor-profile/${doctor.doctorId}`} className="mt-4 flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 hover:translate-y-1 active:bg-blue-800 transition-all">
+                            <Link to={`/doctor-profile/${doctor._id}`} className="mt-4 flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 hover:translate-y-1 active:bg-blue-800 transition-all">
                                 <FaUserMd className="mr-2" />
                                 View Profile
                             </Link>

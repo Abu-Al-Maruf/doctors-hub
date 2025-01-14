@@ -1,21 +1,26 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useEffect } from "react";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const DoctorProfile = () => {
-    const { doctorId } = useParams();
-    const [doctor, setDoctor] = useState({});
+    const { id } = useParams();
+    const axiosPublic = useAxiosPublic();
+ 
+   
+    const { data: doctor= {}, isLoading } = useQuery({
+        queryKey: ["doctor", id],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get(`/doctors/${id}`);
+            return data;
+        },
+    });
+    console.log(doctor);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        fetch("/doctors.json")
-            .then((res) => res.json())
-            .then((data) => {
-                const foundDoctor = data.find((doc) => doc.doctorId === doctorId);
-                setDoctor(foundDoctor);
-            });
-    }, [doctorId]);
-
+    if(isLoading) return <LoadingSpinner />;
+ 
 
     return (
         <section className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-indigo-50">

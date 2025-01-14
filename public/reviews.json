@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "name": "Sophia Johnson",
     "photo": "https://i.ibb.co/vsMYTjT/pexels-sanaan-3075993.jpg",
     "testimonial": "The care I received was exceptional! The doctor truly listened to my concerns.",
@@ -8,7 +7,6 @@
     "location": "New York, USA"
   },
   {
-    "id": 2,
     "name": "Ethan Smith",
     "photo": "https://i.ibb.co/88rDf0L/pic-3.png",
     "testimonial": "Fast and professional service. Booking my appointment was so easy!",
@@ -16,7 +14,6 @@
     "location": "Los Angeles, USA"
   },
   {
-    "id": 3,
     "name": "Olivia Brown",
     "photo": "https://i.ibb.co/q7Jg389/4.jpg",
     "testimonial": "I appreciated the clear communication and attention to detail throughout my visit.",
@@ -24,7 +21,6 @@
     "location": "Chicago, USA"
   },
   {
-    "id": 4,
     "name": "Mason Davis",
     "photo": "https://i.ibb.co/ZJdbwvD/3.jpg",
     "testimonial": "The clinic was spotless, and the staff was very welcoming and professional.",
@@ -32,7 +28,6 @@
     "location": "Houston, USA"
   },
   {
-    "id": 5,
     "name": "Isabella Martinez",
     "photo": "https://i.ibb.co/C1WG3N9/1.jpg",
     "testimonial": "The doctor provided a detailed plan for my treatment and about my health.",
@@ -40,7 +35,6 @@
     "location": "Miami, USA"
   },
   {
-    "id": 6,
     "name": "Liam Wilson",
     "photo": "https://i.ibb.co/wSxzzM9/2.jpg",
     "testimonial": "The online platform was user-friendly, and the entire process was seamless.",
@@ -48,7 +42,6 @@
     "location": "Phoenix, USA"
   },
   {
-    "id": 7,
     "name": "Amelia Moore",
     "photo": "https://i.ibb.co/gMGLHn7/profile.png",
     "testimonial": "I’ve never had a more stress-free healthcare experience. Highly recommend!",
@@ -56,7 +49,6 @@
     "location": "San Diego, USA"
   },
   {
-    "id": 8,
     "name": "Lucas Miller",
     "photo": "https://i.ibb.co/zXbjJ77/girl1.jpg",
     "testimonial": "The doctor was thorough and explained my condition in a way I could understand.",
@@ -64,7 +56,6 @@
     "location": "Dallas, USA"
   },
   {
-    "id": 9,
     "name": "Charlotte Anderson",
     "photo": "https://i.ibb.co/5hHCmBK/boy2.jpg",
     "testimonial": "The staff was so kind, and I felt at ease during the entire process.",
@@ -72,7 +63,6 @@
     "location": "Seattle, USA"
   },
   {
-    "id": 10,
     "name": "Henry Thomas",
     "photo": "https://i.ibb.co/ysrYggT/boy1.png",
     "testimonial": "I was impressed by the professionalism and care provided at this clinic.",

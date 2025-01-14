@@ -14,6 +14,7 @@ import bg3 from '../../../assets/home/bg-3.jpg';
 import bg4 from '../../../assets/home/bg-4.jpg';
 import bg5 from '../../../assets/home/bg-5.jpg';
 import bg6 from '../../../assets/home/bg-6.jpg';
+import { Link } from 'react-router';
 
 const Banner = () => {
     const backgroundImages = [bg1, bg2, bg3, bg4, bg5, bg6];
@@ -69,9 +70,9 @@ const Banner = () => {
 
                             {/* Call-to-Action Buttons */}
                             <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start ">
-                                <button className="bg-gradient-to-b from-blue-500 to-blue-700 text-white font-semibold py-2 px-4 sm:py-2.5 sm:px-5 md:py-3 md:px-6 rounded-lg shadow-md transform hover:scale-105 active:translate-y-1 transition-all duration-200">
+                                <Link to='/appoinment' className="bg-gradient-to-b from-blue-500 to-blue-700 text-white font-semibold py-2 px-4 sm:py-2.5 sm:px-5 md:py-3 md:px-6 rounded-lg shadow-md transform hover:scale-105 active:translate-y-1 transition-all duration-200">
                                     Book an Appointment
-                                </button>
+                                </Link>
                                 <button className="bg-gradient-to-b from-gray-100 to-gray-300 text-gray-700 font-semibold py-2 px-4 sm:py-2.5 sm:px-5 md:py-3 md:px-6 rounded-lg shadow-md transform hover:scale-105 active:translate-y-1 transition-all duration-200">
                                     Learn More
                                 </button>
