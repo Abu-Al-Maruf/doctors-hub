@@ -2,17 +2,22 @@ import { FaEye, FaEyeSlash, FaFacebook } from 'react-icons/fa';
 import loginImage from '../../../src/assets/login.png';
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Login = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { loginUser, googleLogin, facebookLogin } = useAuth();
+    const { loginUser, googleLogin, facebookLogin, updateUserProfile } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+    const axiosPublic = useAxiosPublic()
+
 
     const onSubmit = async (data) => {
         const loadingToast = toast.loading('Logging in...');
@@ -22,7 +27,7 @@ const Login = () => {
                 id: loadingToast
             });
 
-            navigate('/');
+            navigate(from, { replace: true });
         } catch (error) {
             console.error(error.message);
             toast.error('You entered the wrong password', {
@@ -37,10 +42,31 @@ const Login = () => {
         try {
             const result = await googleLogin();
             console.log(result.user);
-            navigate("/");
-            toast.success('Logged in with Google successfully!', {
-                id: loadingToast
-            });
+
+            const userInfo = {
+                email: result?.user?.email,
+                name: result?.user?.displayName,
+                role: "Guest",
+                status: "Verified",
+                timestamp: new Date().toLocaleString(),
+            }
+
+            axiosPublic.post("/user", userInfo)
+                .then(res => {
+                    console.log(res.data);
+                    // update user 
+                    updateUserProfile(result?.user?.displayName, result?.user?.email);
+                    toast.success('Logged in with Google successfully!', {
+                        id: loadingToast,
+                    });
+                    navigate(from, { replace: true });
+                }).catch(err => {
+                    console.log(err);
+                    toast.error('Failed to log in with Google. Please try again.', {
+                        id: loadingToast
+                    });
+                })
+
         } catch (error) {
             console.log(error);
             toast.error('Failed to log in with Google. Please try again.', {
@@ -55,10 +81,29 @@ const Login = () => {
         try {
             const result = await facebookLogin();
             console.log(result.user);
-            navigate("/");
-            toast.success('Logged in with Facebook successfully!', {
-                id: loadingToast
-            });
+            const userInfo = {
+                uid: result?.user?.uid,
+                name: result?.user?.displayName,
+                role: "Guest",
+                status: "Verified",
+                timestamp: new Date().toLocaleString(),
+            }
+            axiosPublic.post("/user", userInfo)
+                .then(res => {
+                    console.log(res.data);
+                    // update user 
+                    updateUserProfile(result?.user?.displayName, result?.user?.email);
+                    toast.success('Logged in with Facebook successfully!', {
+                        id: loadingToast,
+                    });
+                    navigate('/');
+                })
+                .catch(err => {
+                    console.log(err);
+                    toast.error('Failed to log in with Facebook. Please try again.', {
+                        id: loadingToast
+                    });
+                })
         } catch (error) {
             console.log(error);
             toast.error('Failed to log in with Facebook. Please try again.', {
@@ -66,8 +111,6 @@ const Login = () => {
             });
         }
     }
-
-
     // password visibility toggle
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -75,7 +118,7 @@ const Login = () => {
 
     return (
         <section className="px-4 sm:px-6 md:px-16 py-20 bg-[#ECF0FF]">
-             <Helmet>
+            <Helmet>
                 <title>Login</title>
             </Helmet>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-10">

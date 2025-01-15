@@ -17,7 +17,7 @@ const DoctorProfile = () => {
             return data;
         },
     });
-    console.log(doctor);
+
 
     if(isLoading) return <LoadingSpinner />;
  

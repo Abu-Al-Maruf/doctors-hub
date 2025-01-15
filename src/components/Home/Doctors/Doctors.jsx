@@ -17,7 +17,6 @@ const Doctors = () => {
         },
     });
                 
-    console.log(doctors);
 
 
     return (

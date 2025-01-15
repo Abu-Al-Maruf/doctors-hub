@@ -1,31 +1,60 @@
-import { FaGithub, FaEye, FaEyeSlash, FaFacebookF } from "react-icons/fa";
-import loginImage from "../../../src/assets/login.png";
+import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
+import loginImage from "../../assets/login.png";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { createUser, googleLogin, facebookLogin } = useAuth();
+  const { createUser, googleLogin, facebookLogin, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic()
 
+
+  // submit the form data 
   const onSubmit = async (data) => {
     const loadingToast = toast.loading('Creating your account...');
 
     try {
-      await createUser(data.email, data.password);
+      const res = await createUser(data.email, data.password);
+      console.log(res);
 
-      toast.success('Account created successfully!', {
-        id: loadingToast,
-      });
 
-      navigate('/');
+      const userInfo = {
+        email: data.email,
+        name: data.name,
+        role: "Guest",
+        status: "Verified",
+        timestamp: new Date().toLocaleString(),
+      }
+
+      axiosPublic.post("/user", userInfo)
+        .then(res => {
+          console.log(res.data);
+
+          if (res.data.insertedId) {
+            // update user 
+            updateUserProfile(data.name, data.email);
+            toast.success('Account created successfully!', {
+              id: loadingToast,
+            });
+            navigate('/');
+          }
+
+        })
+        .catch(err => {
+          console.log(err);
+          toast.error(err.message, {
+            id: loadingToast,
+          });
+        });
+
     } catch (error) {
       console.error(error);
 
@@ -47,10 +76,31 @@ const Register = () => {
     try {
       const result = await googleLogin();
       console.log(result.user);
-      navigate("/");
-      toast.success('Logged in with Google successfully!', {
-        id: loadingToast
-      });
+
+      const userInfo = {
+        email: result?.user?.email,
+        name: result?.user?.displayName,
+        role: "Guest",
+        status: "Verified",
+        timestamp: new Date().toLocaleString(),
+      }
+
+      axiosPublic.post("/user", userInfo)
+        .then(res => {
+          console.log(res.data);
+          // update user 
+          updateUserProfile(result?.user?.displayName, result?.user?.email);
+          toast.success('Logged in with Google successfully!', {
+            id: loadingToast,
+          });
+          navigate('/');
+        }).catch(err => {
+          console.log(err);
+          toast.error('Failed to log in with Google. Please try again.', {
+            id: loadingToast
+          });
+        })
+
     } catch (error) {
       console.log(error);
       toast.error('Failed to log in with Google. Please try again.', {
@@ -65,10 +115,29 @@ const Register = () => {
     try {
       const result = await facebookLogin();
       console.log(result.user);
-      navigate("/");
-      toast.success('Logged in with Facebook successfully!', {
-        id: loadingToast
-      });
+      const userInfo = {
+        uid: result?.user?.uid,
+        name: result?.user?.displayName,
+        role: "Guest",
+        status: "Verified",
+        timestamp: new Date().toLocaleString(),
+      }
+      axiosPublic.post("/user", userInfo)
+        .then(res => {
+          console.log(res.data);
+          // update user 
+          updateUserProfile(result?.user?.displayName, result?.user?.email);
+          toast.success('Logged in with Facebook successfully!', {
+            id: loadingToast,
+          });
+          navigate('/');
+        })
+        .catch(err => {
+          console.log(err);
+          toast.error('Failed to log in with Facebook. Please try again.', {
+            id: loadingToast
+          });
+        })
     } catch (error) {
       console.log(error);
       toast.error('Failed to log in with Facebook. Please try again.', {
@@ -84,7 +153,7 @@ const Register = () => {
 
   return (
     <section className="px-4 sm:px-6 md:px-16 py-20 bg-[#ECF0FF]">
-       <Helmet>
+      <Helmet>
         <title>Register</title>
       </Helmet>
       <div className="flex flex-col sm:flex-row justify-between items-center gap-10">

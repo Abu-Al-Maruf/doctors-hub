@@ -35,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "doctor-profile/:id",
-        element: <DoctorProfile />,
+        element: <PrivateRoute><DoctorProfile /></PrivateRoute>,
       },
       {
         path: "login",

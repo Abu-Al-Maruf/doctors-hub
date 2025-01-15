@@ -12,8 +12,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const Review = () => {
     const axiosPublic = useAxiosPublic();
-
-
+    
     // Fetch reviews from DB
     const { data: reviews = [] } = useQuery({
         queryKey: ['reviews'],
@@ -22,7 +21,7 @@ const Review = () => {
             return data;
         }
     });
-    console.log(reviews);
+
 
     return (
         <section className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-gray-100">
