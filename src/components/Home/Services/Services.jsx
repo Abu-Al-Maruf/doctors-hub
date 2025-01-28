@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const Services = () => {
     const [services, setServices] = useState([]);
+    const axiosPublic = useAxiosPublic();
 
-    // Fetch data from the public folder
     useEffect(() => {
-        fetch("/services.json")  // Fetch from the public folder
-            .then((response) => response.json())
-            .then((data) => setServices(data))
-            .catch((error) => console.error("Error fetching services:", error));
-    }, []);
+        axiosPublic.get('/services')
+            .then(res => {
+                setServices(res.data);
+            })
+    }, [])
 
     return (
         <div className="px-4 sm:px-6 md:px-12 lg:px-20 py-16 bg-white">
@@ -25,7 +26,7 @@ const Services = () => {
             <div className="services grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
                 {services.map((service) => (
                     <div
-                        key={service.id}
+                        key={service._id}
                         className="group flex flex-col items-center justify-start p-4 bg-blue-100 hover:bg-black/70 shadow-lg hover:shadow-2xl rounded-lg transform transition-all duration-300 ease-in-out cursor-pointer hover:translate-y-1 "
                     >
                         {/* Image Section */}

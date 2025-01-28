@@ -5,6 +5,7 @@ import 'react-date-range/dist/theme/default.css';
 import { Calendar } from "react-date-range";
 import { Helmet } from "react-helmet-async";
 import AppoinmentModal from "../../components/Modals/AppoinmentModal";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Appointment = () => {
   const [services, setServices] = useState([]);
@@ -12,14 +13,15 @@ const Appointment = () => {
   const [selectedService, setSelectedService] = useState("");
   const [time, setTime] = useState("");
   const [error, setError] = useState("");
+  const axiosPublic = useAxiosPublic();
 
 
-
-  // load services data from json file
+  // load services data from db
   useEffect(() => {
-    fetch("services.json")
-      .then(res => res.json())
-      .then(data => setServices(data))
+    axiosPublic.get('/services')
+      .then(res => {
+        setServices(res.data);
+      })
   }, [])
 
   const timeSlots = [
@@ -94,7 +96,7 @@ const Appointment = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {services.map((service) => (
                 <button
-                  key={service.id}
+                  key={service._id}
                   onClick={() => setSelectedService(service.title)}
                   className={`flex items-center justify-center gap-2 p-4 border rounded-lg shadow-md transition-all ${selectedService === service.title
                     ? "bg-blue-600 text-white"

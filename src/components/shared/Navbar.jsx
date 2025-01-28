@@ -211,7 +211,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className={`px-4 sm:px-6 md:px-12 lg:px-20 sticky top-0 left-0 right-0 z-10 bg-[#EBEAFF] shadow-lg transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-[105%]'}`}>
+    <nav className={`px-4 sm:px-6 md:px-12 lg:px-20 sticky top-0 left-0 right-0 z-20 bg-[#EBEAFF] shadow-lg transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-[105%]'}`}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-3 px-4" ref={menuRef}>
         <Link
           to="/"
