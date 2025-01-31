@@ -8,12 +8,15 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Apponment from "../pages/Appoinment/Apponment";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import PrivateRoute from "./PrivateRoute";
-import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import UserHome from "../pages/Dashboard/UserHome/UserHome";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Appoinments from "../pages/Dashboard/Appoinments/Appoinments";
 import ManageDoctors from "../pages/Dashboard/Admin/ManageDoctors/ManageDoctors";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import AddDoctor from "../pages/Dashboard/Admin/AddDoctor/AddDoctor";
+import AdminHome from "../pages/Dashboard/Admin/AdminHome/AdminHome";
+import AdminRoute from "./AdminRoute";
+
 
 const router = createBrowserRouter([
   {
@@ -52,8 +55,8 @@ const router = createBrowserRouter([
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       {
-        path: "/dashboard",
-        element: <DashboardHome />,
+        path: "user-home",
+        element: <UserHome />,
       },
       {
         path: "appoinments",
@@ -61,16 +64,20 @@ const router = createBrowserRouter([
       },
       // admin routes 
       {
+        path: "admin-home",
+        element: <AdminRoute><AdminHome /></AdminRoute>,
+      },
+      {
         path: "all-users",
-        element: <AllUsers />,
+        element: <AdminRoute><AllUsers /></AdminRoute>,
       },
       {
         path: "add-doctor",
-        element: <AddDoctor />,
+        element: <AdminRoute><AddDoctor /></AdminRoute>,
       },
       {
         path: "manage-doctors",
-        element: <ManageDoctors />,
+        element: <AdminRoute><ManageDoctors /></AdminRoute>,
       },
 
 

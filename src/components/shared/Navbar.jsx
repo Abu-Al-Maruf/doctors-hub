@@ -4,6 +4,7 @@ import { FaBars, FaCaretDown, FaCaretUp, FaTimes } from 'react-icons/fa';
 import { useEffect, useRef, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useAdmin from "../../hooks/useAdmin";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,6 +15,8 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const navigate = useNavigate()
   const location = useLocation();
+  const [isAdmin] = useAdmin()
+  // const isAdmin = true
 
   const handleLogout = async () => {
     await logOut();
@@ -180,14 +183,30 @@ const Navbar = () => {
       </NavLink>
     </li>
 
-    {user && <li> <NavLink
-      to="/dashboard"
-      className={({ isActive }) => `block py-2 px-3 ${isActive ? 'text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`}
-    >
-      Dashboard
-    </NavLink>
-    </li>
-    }
+
+    {user && isAdmin && (
+      <li>
+        <NavLink
+          to="/dashboard/admin-home"
+          className={({ isActive }) => `block py-2 px-3 ${isActive ? 'text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`}
+        >
+          Dashboard
+        </NavLink>
+      </li>
+    )}
+
+    {user && !isAdmin && (
+      <li>
+        <NavLink
+          to="/dashboard/user-home"
+          className={({ isActive }) => `block py-2 px-3 ${isActive ? 'text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`}
+        >
+          Dashboard
+        </NavLink>
+      </li>
+    )}
+
+
     <li>
       {
         user ?

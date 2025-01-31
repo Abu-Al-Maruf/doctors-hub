@@ -30,7 +30,6 @@ const Register = () => {
         email: data.email,
         name: data.name,
         role: "Guest",
-        status: "Verified",
         timestamp: new Date().toLocaleString(),
       }
 

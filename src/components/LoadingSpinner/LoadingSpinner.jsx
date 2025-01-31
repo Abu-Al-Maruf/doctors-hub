@@ -6,7 +6,7 @@ import {
 const LoadingSpinner = ({ smallHeight }) => {
     return (
         <div
-            className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}
+            className={` ${smallHeight ? 'h-[250px]' : 'h-[100vh]'}
       flex 
       flex-col 
       justify-center 

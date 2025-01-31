@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const DashboardHome = () => {
+const UserHome = () => {
     return (
         <div>
             <h1>Dashboard Home</h1>
@@ -10,4 +10,4 @@ const DashboardHome = () => {
     );
 };
 
-export default DashboardHome;
+export default UserHome;
